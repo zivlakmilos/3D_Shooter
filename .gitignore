@@ -1,0 +1,7 @@
+# Binary files
+
+build/
+deploy/
+
+# Kdevelop
+*.kdev4
