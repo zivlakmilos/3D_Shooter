@@ -46,6 +46,13 @@ namespace zi
         virtual T getZ(void) const { return m_z; };
         virtual void setZ(T z) { m_z = z; };
         
+        virtual float length(void) const
+        {
+            return sqrt(this->getX() * this->getX() +
+                        this->getY() * this->getY() +
+                        getZ() * getZ());
+        }
+        
         bool operator==(const Vect3<T> &rhs) const
         {
             return this->getX() == rhs.getX() &&

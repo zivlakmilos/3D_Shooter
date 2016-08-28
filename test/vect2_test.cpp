@@ -79,3 +79,18 @@ TEST_F(Vect2Test, testDividing)
     ASSERT_EQ(result1, test1);
     ASSERT_EQ(result2, test2);
 }
+
+TEST_F(Vect2Test, testLength)
+{
+    Vect2<int> vect1(4, 3);
+    Vect2<float> vect2(1.5f, 2.0f);
+    
+    float result1 = 5.0f;
+    float result2 = 2.5f;
+    
+    float test1 = vect1.length();
+    float test2 = vect2.length();
+    
+    ASSERT_EQ(result1, test1);
+    ASSERT_EQ(result2, test2);
+}

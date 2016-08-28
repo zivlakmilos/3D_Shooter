@@ -2,6 +2,7 @@
 #define _VECT2_H_
 
 #include <ostream>
+#include <cmath>
 
 namespace zi
 {
@@ -44,6 +45,12 @@ namespace zi
         virtual void setX(T x) { m_x = x; };
         virtual T getY(void) const { return m_y; };
         virtual void setY(T y) { m_y = y; };
+        
+        virtual float length(void) const
+        {
+            return sqrt(getX() * getX() +
+                        getY() * getY());
+        }
         
         bool operator==(const Vect2<T> &rhs) const
         {
