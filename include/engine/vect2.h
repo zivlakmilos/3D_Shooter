@@ -54,10 +54,7 @@ namespace zi
         
         virtual void normalize(void)    // Not work for integer vectors
         {
-            float len = length();
-            
-            setX(getX() / len);
-            setY(getY() / len);
+            *this /= length();
         }
         
         bool operator==(const Vect2<T> &rhs) const
@@ -93,6 +90,23 @@ namespace zi
             return result;
         }
         
+        Vect2<T> &operator+=(const T &rhs)
+        {
+            setX(getX() + rhs);
+            setY(getY() + rhs);
+            
+            return *this;
+        }
+        
+        Vect2<T> operator+(const T &rhs)
+        {
+            Vect2<T> result(*this);
+            
+            result += rhs;
+            
+            return result;
+        }
+        
         Vect2<T> &operator-=(const Vect2<T> &rhs)
         {
             setX(getX() - rhs.getX());
@@ -102,6 +116,23 @@ namespace zi
         }
         
         Vect2<T> operator-(const Vect2<T> &rhs)
+        {
+            Vect2<T> result(*this);
+            
+            result -= rhs;
+            
+            return result;
+        }
+        
+        Vect2<T> &operator-=(const T &rhs)
+        {
+            setX(getX() - rhs);
+            setY(getY() - rhs);
+            
+            return *this;
+        }
+        
+        Vect2<T> operator-(const T &rhs)
         {
             Vect2<T> result(*this);
             
@@ -127,6 +158,23 @@ namespace zi
             return result;
         }
         
+        Vect2<T> &operator*=(const T &rhs)
+        {
+            setX(getX() * rhs);
+            setY(getY() * rhs);
+            
+            return *this;
+        }
+        
+        Vect2<T> operator*(const T &rhs)
+        {
+            Vect2<T> result(*this);
+            
+            result *= rhs;
+            
+            return result;
+        }
+        
         Vect2<T> &operator/=(const Vect2<T> &rhs)
         {
             setX(getX() / rhs.getX());
@@ -136,6 +184,23 @@ namespace zi
         }
         
         Vect2<T> operator/(const Vect2<T> &rhs)
+        {
+            Vect2<T> result(*this);
+            
+            result /= rhs;
+            
+            return result;
+        }
+        
+        Vect2<T> &operator/=(const T &rhs)
+        {
+            setX(getX() / rhs);
+            setY(getY() / rhs);
+            
+            return *this;
+        }
+        
+        Vect2<T> operator/(const T &rhs)
         {
             Vect2<T> result(*this);
             
