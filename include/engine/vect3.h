@@ -98,7 +98,7 @@ namespace zi
             return result;
         }
         
-        Vect2<T> &operator+=(const T &rhs)
+        Vect3<T> &operator+=(const T &rhs)
         {
             this->setX(this->getX() + rhs);
             this->setY(this->getY() + rhs);
@@ -107,9 +107,9 @@ namespace zi
             return *this;
         }
         
-        Vect2<T> operator+(const T &rhs)
+        Vect3<T> operator+(const T &rhs)
         {
-            Vect2<T> result(*this);
+            Vect3<T> result(*this);
             
             result += rhs;
             
@@ -134,7 +134,7 @@ namespace zi
             return result;
         }
         
-        Vect2<T> &operator-=(const T &rhs)
+        Vect3<T> &operator-=(const T &rhs)
         {
             this->setX(this->getX() - rhs);
             this->setY(this->getY() - rhs);
@@ -143,9 +143,9 @@ namespace zi
             return *this;
         }
         
-        Vect2<T> operator-(const T &rhs)
+        Vect3<T> operator-(const T &rhs)
         {
-            Vect2<T> result(*this);
+            Vect3<T> result(*this);
             
             result -= rhs;
             
@@ -170,7 +170,7 @@ namespace zi
             return result;
         }
         
-        Vect2<T> &operator*=(const T &rhs)
+        Vect3<T> &operator*=(const T &rhs)
         {
             this->setX(this->getX() * rhs);
             this->setY(this->getY() * rhs);
@@ -179,9 +179,9 @@ namespace zi
             return *this;
         }
         
-        Vect2<T> operator*(const T &rhs)
+        Vect3<T> operator*(const T &rhs)
         {
-            Vect2<T> result(*this);
+            Vect3<T> result(*this);
             
             result *= rhs;
             
@@ -206,7 +206,7 @@ namespace zi
             return result;
         }
         
-        Vect2<T> &operator/=(const T &rhs)
+        Vect3<T> &operator/=(const T &rhs)
         {
             this->setX(this->getX() / rhs);
             this->setY(this->getY() / rhs);
@@ -215,9 +215,9 @@ namespace zi
             return *this;
         }
         
-        Vect2<T> operator/(const T &rhs)
+        Vect3<T> operator/(const T &rhs)
         {
-            Vect2<T> result(*this);
+            Vect3<T> result(*this);
             
             result /= rhs;
             

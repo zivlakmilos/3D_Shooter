@@ -24,12 +24,15 @@ TEST_F(Vect3Test, testAdding)
     Vect3<int> test1 = vect1 + vect2;
     Vect3<int> test2 = test1;
     test2 += vect1;
+    Vect3<int> test3 = vect1 + 2;
     
     Vect3<int> result1(3, 5, 5);
     Vect3<int> result2(4, 7, 7);
+    Vect3<int> result3(3, 4, 4);
     
     ASSERT_EQ(result1, test1);
     ASSERT_EQ(result2, test2);
+    ASSERT_EQ(result3, test3);
 }
 
 TEST_F(Vect3Test, testSubtracking)
@@ -40,12 +43,15 @@ TEST_F(Vect3Test, testSubtracking)
     Vect3<int> test1 = vect1 - vect2;
     Vect3<int> test2 = test1;
     test2 -= vect1;
+    Vect3<int> test3 = vect1 - 5;
     
     Vect3<int> result1(1, 2, 1);
     Vect3<int> result2(-3, -5, -3);
+    Vect3<int> result3(-1, 2, -1);
     
     ASSERT_EQ(result1, test1);
     ASSERT_EQ(result2, test2);
+    ASSERT_EQ(result3, test3);
 }
 
 TEST_F(Vect3Test, testMultiplaying)
@@ -56,12 +62,15 @@ TEST_F(Vect3Test, testMultiplaying)
     Vect3<int> test1 = vect1 * vect2;
     Vect3<int> test2 = test1;
     test2 *= vect2;
+    Vect3<int> test3 = test1 * 2;
     
     Vect3<int> result1(2, 6, 6);
     Vect3<int> result2(4, 18, 18);
+    Vect3<int> result3(2, 4, 4);
     
     ASSERT_EQ(result1, test1);
     ASSERT_EQ(result2, test2);
+    ASSERT_EQ(result3, test3);
 }
 
 TEST_F(Vect3Test, testDividing)
@@ -72,12 +81,15 @@ TEST_F(Vect3Test, testDividing)
     Vect3<float> test1 = vect1 / vect2;
     Vect3<float> test2 = test1;
     test2 /= vect2;
+    Vect3<float> test3 = vect1 / 2;
     
     Vect3<float> result1(2.0f, 3.0f, 4.5f);
     Vect3<float> result2(1.0f, 1.0f, 2.25f);
+    Vect3<float> result3(1.0f, 4.5f, 4.5f);
     
     ASSERT_EQ(result1, test1);
     ASSERT_EQ(result2, test2);
+    ASSERT_EQ(result3, test3);
 }
 
 TEST_F(Vect3Test, testLength)
