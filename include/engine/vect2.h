@@ -1,5 +1,5 @@
-#ifndef _VEC2_H_
-#define _VEC2_H_
+#ifndef _VECT2_H_
+#define _VECT2_H_
 
 #include <ostream>
 
@@ -28,18 +28,22 @@ namespace zi
         {
         }
         
-        Vect2(const Vect2 &vect)
+        Vect2(const Vect2<T> &vect)
             : Vect2(vect.getX(), vect.getY())
+        {
+        }
+        
+        virtual ~Vect2(void)
         {
         }
         
         /*
          * Getters and setters
          */
-        T getX(void) const { return m_x; };
-        void setX(T x) { m_x = x; };
-        T getY(void) const { return m_y; };
-        void setY(T y) { m_y = y; };
+        virtual T getX(void) const { return m_x; };
+        virtual void setX(T x) { m_x = x; };
+        virtual T getY(void) const { return m_y; };
+        virtual void setY(T y) { m_y = y; };
         
         bool operator==(const Vect2<T> &rhs) const
         {
@@ -127,14 +131,22 @@ namespace zi
         
         friend std::ostream &operator<<(std::ostream &output, const Vect2<T> &rhs)
         {
-            output << "[ " << rhs.getX() << ", " << rhs.getY() << " ]";
+            output << "[ " << rhs.getX()
+                   << ", " << rhs.getY() << " ]";
+            
             return output;
         }
         
-    private:
+    protected:
         T m_x;
         T m_y;
     };
+    
+    /*
+     * For easyer use
+     */
+    typedef Vect2<int> Vect2i;
+    typedef Vect2<float> Vect2f;
 }
 
-#endif // _VEC2_H_
+#endif // _VECT2_H_

@@ -46,7 +46,8 @@ target_link_libraries(${PROJECT_NAME} ${LIBRARIES})
 find_package(GTest)
 if(${GTEST_FOUND})
     set(TEST_SOURECES
-        test/vec2_test.cpp
+        test/vect2_test.cpp
+        test/vect3_test.cpp
     )
 
     include_directories(${GTEST_INCLUDE_DIRS})

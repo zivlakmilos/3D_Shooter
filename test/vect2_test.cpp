@@ -66,15 +66,15 @@ TEST_F(Vect2Test, testMultiplaying)
 
 TEST_F(Vect2Test, testDividing)
 {
-    Vect2<float> vect1(4, 9);
-    Vect2<float> vect2(2, 3);
+    Vect2<float> vect1(4.0f, 9.0f);
+    Vect2<float> vect2(2.0f, 2.0f);
     
     Vect2<float> test1 = vect1 / vect2;
     Vect2<float> test2 = test1;
     test2 /= vect2;
     
-    Vect2<float> result1(2, 3);
-    Vect2<float> result2(1, 1);
+    Vect2<float> result1(2.0f, 4.5f);
+    Vect2<float> result2(1.0f, 2.25f);
     
     ASSERT_EQ(result1, test1);
     ASSERT_EQ(result2, test2);
