@@ -52,6 +52,14 @@ namespace zi
                         getY() * getY());
         }
         
+        virtual void normalize(void)    // Not work for integer vectors
+        {
+            float len = length();
+            
+            setX(getX() / len);
+            setY(getY() / len);
+        }
+        
         bool operator==(const Vect2<T> &rhs) const
         {
             return getX() == rhs.getX() && getY() == rhs.getY();

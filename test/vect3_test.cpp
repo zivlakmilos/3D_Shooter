@@ -97,3 +97,17 @@ TEST_F(Vect3Test, testLength)
     ASSERT_EQ(result1, test1);
     ASSERT_EQ(result2, test2);
 }
+
+TEST_F(Vect3Test, testNormalizing)
+{
+    Vect3<float> vect1(5.0f, 3.0f, 2.0f);
+    Vect3<float> vect2(1.23f, 3.2876f, 7.89);
+    
+    vect1.normalize();
+    vect2.normalize();
+    
+    float result = 1.0f;
+    
+    ASSERT_FLOAT_EQ(result, vect1.length());
+    ASSERT_FLOAT_EQ(result, vect2.length());
+}

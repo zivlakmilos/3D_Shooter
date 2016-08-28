@@ -53,6 +53,15 @@ namespace zi
                         getZ() * getZ());
         }
         
+        virtual void normalize(void)    // Not work for integer vectors
+        {
+            float len = length();
+            
+            this->setX(this->getX() / len);
+            this->setY(this->getY() / len);
+            setZ(getZ() / len);
+        }
+        
         bool operator==(const Vect3<T> &rhs) const
         {
             return this->getX() == rhs.getX() &&

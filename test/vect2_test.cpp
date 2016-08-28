@@ -91,6 +91,20 @@ TEST_F(Vect2Test, testLength)
     float test1 = vect1.length();
     float test2 = vect2.length();
     
-    ASSERT_EQ(result1, test1);
-    ASSERT_EQ(result2, test2);
+    ASSERT_FLOAT_EQ(result1, test1);
+    ASSERT_FLOAT_EQ(result2, test2);
+}
+
+TEST_F(Vect2Test, testNormalizing)
+{
+    Vect2<float> vect1(5.0f, 3.0f);
+    Vect2<float> vect2(1.23f, 3.2876f);
+    
+    vect1.normalize();
+    vect2.normalize();
+    
+    float result = 1.0f;
+    
+    ASSERT_FLOAT_EQ(result, vect1.length());
+    ASSERT_FLOAT_EQ(result, vect2.length());
 }
