@@ -62,7 +62,7 @@ TEST_F(Vect3Test, testMultiplaying)
     Vect3<int> test1 = vect1 * vect2;
     Vect3<int> test2 = test1;
     test2 *= vect2;
-    Vect3<int> test3 = test1 * 2;
+    Vect3<int> test3 = vect1 * 2;
     
     Vect3<int> result1(2, 6, 6);
     Vect3<int> result2(4, 18, 18);
@@ -85,7 +85,7 @@ TEST_F(Vect3Test, testDividing)
     
     Vect3<float> result1(2.0f, 3.0f, 4.5f);
     Vect3<float> result2(1.0f, 1.0f, 2.25f);
-    Vect3<float> result3(1.0f, 4.5f, 4.5f);
+    Vect3<float> result3(2.0f, 4.5f, 4.5f);
     
     ASSERT_EQ(result1, test1);
     ASSERT_EQ(result2, test2);
