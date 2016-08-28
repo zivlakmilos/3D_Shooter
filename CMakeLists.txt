@@ -1,32 +1,55 @@
-project(mersuthepig)
+project(3dshoter)
 
 cmake_minimum_required(VERSION 2.8)
 
+# Find packages
 find_package(OpenGL REQUIRED)
 find_package(GLEW REQUIRED)
 
 find_package(PkgConfig REQUIRED)
 pkg_search_module(GLFW REQUIRED glfw3)
 
+# Project source code
 set(SOURCES
-    src/main.cpp
+    src/engine/zapplication.cpp
+    src/engine/zexceptions.cpp
 )
 
-INCLUDE_DIRECTORIES(include/)
-INCLUDE_DIRECTORIES(libs/)
-
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
-
-add_executable(${PROJECT_NAME} ${SOURCES})
-
-INCLUDE_DIRECTORIES(
+# Inlucde directories for libraries
+set(INCLUDE_DIRS
     ${OPENGL_INCLUDE_DIRS}
     ${GLEW_INCLUDE_DIRS}
     ${GLFW_INCLUDE_DIRS}
 )
 
-TARGET_LINK_LIBRARIES(${PROJECT_NAME}
+# Libraries for linking
+set(LIBRARIES
     ${OPENGL_LIBRARIES}
     ${GLEW_LIBRARIES}
     ${GLFW_LIBRARIES}
 )
+
+# Configuration
+include_directories(${INCLUDE_DIRS})
+include_directories(include/)
+include_directories(src/)   # For template classes
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
+
+# Compiling
+add_executable(${PROJECT_NAME} src/main.cpp ${SOURCES})
+
+# Linking
+target_link_libraries(${PROJECT_NAME} ${LIBRARIES})
+
+# Google unit test (optional)
+find_package(GTest)
+if(${GTEST_FOUND})
+    set(TEST_SOURECES
+        test/vec2_test.cpp
+    )
+
+    include_directories(${GTEST_INCLUDE_DIRS})
+    add_executable(test test/main.cpp ${TEST_SOURECES} ${SOURCES})
+    target_link_libraries(test ${GTEST_LIBRARIES} ${LIBRARIES})
+endif()
