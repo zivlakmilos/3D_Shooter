@@ -57,6 +57,16 @@ namespace zi
             *this /= length();
         }
         
+        virtual T dotProduct(const Vect2<T> &vect) const
+        {
+            return getX() * vect.getX() + getY() * vect.getY();
+        }
+        
+        virtual T crossProduct(const Vect2<T> &vect) const
+        {
+            return getX() * vect.getY() - getY() * vect.getX();
+        }
+        
         bool operator==(const Vect2<T> &rhs) const
         {
             return getX() == rhs.getX() && getY() == rhs.getY();

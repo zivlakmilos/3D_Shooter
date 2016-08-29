@@ -120,3 +120,32 @@ TEST_F(Vect2Test, testNormalizing)
     ASSERT_FLOAT_EQ(result, vect1.length());
     ASSERT_FLOAT_EQ(result, vect2.length());
 }
+
+TEST_F(Vect2Test, dotProduct)
+{
+    Vect2<int> vect1(1, 3);
+    Vect2<int> vect2(2, 3);
+    Vect2<float> vect3(4.0f, 5.0f);
+    Vect2<float> vect4(0.5f, 2.0f);
+    
+    int result1 = 11;
+    float result2 = 12.0f;
+    
+    int test1 = vect1.dotProduct(vect2);
+    float test2 = vect3.dotProduct(vect4);
+    
+    ASSERT_EQ(result1, test1);
+    ASSERT_FLOAT_EQ(result2, test2);
+}
+
+TEST_F(Vect2Test, crossProduct)
+{
+    Vect2<int> vect1(1, 2);
+    Vect2<int> vect2(2, 3);
+    
+    int result1 = -1;
+    
+    int test1 = vect1.crossProduct(vect2);
+    
+    ASSERT_EQ(result1, test1);
+}
