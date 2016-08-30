@@ -1,8 +1,10 @@
-#ifndef _VECT2_H_
-#define _VECT2_H_
+#ifndef _ENGINE_CORE_VECT2_H_
+#define _ENGINE_CORE_VECT2_H_
 
 #include <ostream>
 #include <cmath>
+
+#include "engine/core/constants.h"
 
 namespace zi
 {
@@ -65,6 +67,30 @@ namespace zi
         virtual T crossProduct(const Vect2<T> &vect) const
         {
             return getX() * vect.getY() - getY() * vect.getX();
+        }
+        
+        virtual void rotateAngle(float angle)
+        {
+            float rad = angle * zi::PI / 180.0f;
+            rotateRadian(rad);
+        }
+        
+        virtual void rotateRadian(float angle)
+        {
+            /*
+             * TODO: Promeniti, ovo ne valja
+             */
+            
+            float x = cos(angle);
+            float y = sin(angle);
+            
+            setX(getX() * x - getY() * y);
+            setY(getX() * y + getY() * x);
+        }
+        
+        virtual void rotate(float angle)
+        {
+            rotateAngle(angle);
         }
         
         bool operator==(const Vect2<T> &rhs) const
@@ -239,4 +265,4 @@ namespace zi
     typedef Vect2<float> Vect2f;
 }
 
-#endif // _VECT2_H_
+#endif // _ENGINE_CORE_VECT2_H_

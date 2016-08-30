@@ -1,7 +1,7 @@
-#ifndef _VECT3_H_
-#define _VECT3_H_
+#ifndef _ENGINE_CORE_VECT3_H_
+#define _ENGINE_CORE_VECT3_H_
 
-#include "engine/vect2.h"
+#include "engine/core/vect2.h"
 
 #include <ostream>
 
@@ -255,4 +255,4 @@ namespace zi
     typedef Vect3<float> Vect3f;
 }
 
-#endif // _VECT3_H_
+#endif // _ENGINE_CORE_VECT3_H_

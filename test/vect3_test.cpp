@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "engine/vect3.h"
+#include "engine/core/core.h"
 
 using namespace zi;
 

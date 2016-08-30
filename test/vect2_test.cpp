@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "engine/vect2.h"
+#include "engine/core/core.h"
 
 using namespace zi;
 
@@ -148,4 +148,19 @@ TEST_F(Vect2Test, crossProduct)
     int test1 = vect1.crossProduct(vect2);
     
     ASSERT_EQ(result1, test1);
+}
+
+TEST_F(Vect2Test, rotate)
+{
+    Vect2<float> vect1(0.0f, 1.0f);
+    Vect2<float> vect2(1.0f, 0.0f);
+    
+    Vect2<float> result1(1.0f, 0.0f);
+    Vect2<float> result2(0.0f, 1.0f);
+    
+    vect1.rotate(-90);
+    vect2.rotate(90);
+    
+    ASSERT_EQ(result1, vect1);
+    ASSERT_EQ(result2, vect2);
 }
