@@ -45,23 +45,37 @@ namespace zi
          */
         virtual T getZ(void) const { return m_z; };
         virtual void setZ(T z) { m_z = z; };
+        virtual Vect2<T> getXY(void) const { return Vect2<T>(this->getX(), this->getY()); };
         
-        virtual float length(void) const
+        virtual float length(void) const override
         {
             return sqrt(this->getX() * this->getX() +
                         this->getY() * this->getY() +
                         getZ() * getZ());
         }
         
-        virtual void normalize(void)    // Not work for integer vectors
+        virtual void normalize(void) override   // Not work for integer vectors
         {
             *this /= length();
         }
         
+        virtual T dotProduct(const Vect3<T> &vect) const
+        {
+            return Vect2<T>::dotProduct(vect.getXY()) + getZ() * vect.getZ();
+        }
+        
+        virtual Vect3<T> crossProduct(const Vect3<T> &vect) const
+        {
+            T x = this->getY() * vect.getZ() - getZ() * vect.getY();
+            T y = getZ() * vect.getX() - this->getX() * vect.getZ();
+            T z = this->getX() * vect.getY() - this->getY() * vect.getX();
+            
+            return Vect3<T>(x, y, z);
+        }
+        
         bool operator==(const Vect3<T> &rhs) const
         {
-            return this->getX() == rhs.getX() &&
-                   this->getY() == rhs.getY() &&
+            return Vect2<T>::operator==(rhs.getXY()) &&
                    getZ() == rhs.getZ();
         }
         
