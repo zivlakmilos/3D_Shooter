@@ -3,7 +3,7 @@
 
 namespace zi
 {
-    const float PI = 3.14159265f;
+    const double PI = 3.1415926535897932384;
 }
 
 #endif // _ENGINE_CONSTANTS_H_

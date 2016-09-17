@@ -11,8 +11,10 @@ pkg_search_module(GLFW REQUIRED glfw3)
 
 # Project source code
 set(SOURCES
+    src/engine/errors/zexception.cpp
+    src/engine/errors/zoutofrangeexception.cpp
+    
     src/engine/zapplication.cpp
-    src/engine/zexceptions.cpp
 )
 
 # Inlucde directories for libraries
@@ -32,7 +34,6 @@ set(LIBRARIES
 # Configuration
 include_directories(${INCLUDE_DIRS})
 include_directories(include/)
-include_directories(src/)   # For template classes
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
 
@@ -48,6 +49,7 @@ if(${GTEST_FOUND})
     set(TEST_SOURECES
         test/vect2_test.cpp
         test/vect3_test.cpp
+        test/matrix_transform_2d.cpp
     )
 
     include_directories(${GTEST_INCLUDE_DIRS})

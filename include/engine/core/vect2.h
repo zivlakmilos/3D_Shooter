@@ -69,30 +69,6 @@ namespace zi
             return getX() * vect.getY() - getY() * vect.getX();
         }
         
-        virtual void rotateAngle(float angle)
-        {
-            float rad = angle * zi::PI / 180.0f;
-            rotateRadian(rad);
-        }
-        
-        virtual void rotateRadian(float angle)
-        {
-            /*
-             * TODO: Promeniti, ovo ne valja
-             */
-            
-            float x = cos(angle);
-            float y = sin(angle);
-            
-            setX(getX() * x - getY() * y);
-            setY(getX() * y + getY() * x);
-        }
-        
-        virtual void rotate(float angle)
-        {
-            rotateAngle(angle);
-        }
-        
         bool operator==(const Vect2<T> &rhs) const
         {
             return getX() == rhs.getX() && getY() == rhs.getY();
