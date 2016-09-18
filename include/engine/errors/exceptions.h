@@ -3,6 +3,7 @@
 
 #include <exception>
 #include <string>
+#include <ostream>
 
 namespace zi
 {
@@ -31,6 +32,11 @@ namespace zi
         ZOutOfRangeException(void);
         virtual ~ZOutOfRangeException(void);
     };
+    
+    /*
+     * Operators
+     */
+    std::ostream &operator<<(std::ostream &lhs, const ZException &rhs);
 }
 
 #endif // _ENGINE_ERRORS_EXCEPTIONS_H_

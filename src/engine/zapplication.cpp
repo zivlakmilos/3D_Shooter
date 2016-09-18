@@ -3,6 +3,8 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
+#include "engine/errors/errors.h"
+
 using namespace std;
 
 zi::ZApplication::ZApplication(int argc, char *argv[])
@@ -14,8 +16,14 @@ zi::ZApplication::ZApplication(int argc, char *argv[])
         m_args.push_back(arg);
     }
     
-    if(!glfwInit());
-        // Exception
+    if(!glfwInit())
+        throw ZException("Can't initialize glfw");
+    
+    glfwWindowHint(GLFW_SAMPLES, 4);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 }
 
 zi::ZApplication::~ZApplication(void)

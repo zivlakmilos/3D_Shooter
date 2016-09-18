@@ -3,4 +3,6 @@
 
 #include "engine/core/core.h"
 
+#include "engine/zapplication.h"
+
 #endif // _ENGINE_H_

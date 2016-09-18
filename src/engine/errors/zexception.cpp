@@ -18,3 +18,10 @@ const char *zi::ZException::what(void) const throw()
 {
     return m_what.c_str();
 }
+
+std::ostream &zi::operator<<(std::ostream &lhs, const zi::ZException &rhs)
+{
+    lhs << rhs.what();
+    
+    return lhs;
+}

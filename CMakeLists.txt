@@ -13,6 +13,7 @@ pkg_search_module(GLFW REQUIRED glfw3)
 set(SOURCES
     src/engine/errors/zexception.cpp
     src/engine/errors/zoutofrangeexception.cpp
+    src/engine/errors/debug.cpp
     
     src/engine/zapplication.cpp
 )
