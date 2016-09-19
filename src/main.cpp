@@ -1,6 +1,32 @@
 #include "engine/engine.h"
 
+#include "GL/gl.h"
+
 using namespace zi;
+
+class Window : public zi::ZWindow
+{
+public:
+    Window(void)
+        : zi::ZWindow("Test", 1024, 768)
+    {
+    }
+    
+    virtual ~Window(void)
+    {
+    }
+    
+    virtual void render(void)
+    {
+        if(!m_show)
+            return;
+        
+        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT);
+        
+        zi::ZWindow::render();
+    }
+};
 
 int main(int argc, char *argv[])
 {
@@ -12,12 +38,9 @@ int main(int argc, char *argv[])
     
     try {
         ZApplication app(argc, argv);
-        ZWindow *window = new ZWindow("Test", 1024, 768);
-        ZWindow *window2 = new ZWindow("Test2", 1024, 768);
+        Window *window = new Window;
         app.addWindow(window);
-        app.addWindow(window2);
         window->show();
-        window2->show();
         app.start();
     } catch(ZException ex) {
         Debug::error << ex;
