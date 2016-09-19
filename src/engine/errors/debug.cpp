@@ -13,7 +13,7 @@ void zi::Debug::init(void)
 
 bool zi::Debug::isDebugEnabled(void)
 {
-#if _DEBUG_ENABLED_ > 0
+#if _DEBUG_ENABLE_ > 0
     return s_debugEnabled;
 #endif // _DEBUG_ENABLED_ > 0
     return false;
@@ -21,7 +21,7 @@ bool zi::Debug::isDebugEnabled(void)
 
 void zi::Debug::setDebugEnabled(bool debug)
 {
-#if _DEBUG_ENABLED_ > 0
+#if _DEBUG_ENABLE_ > 0
     s_debugEnabled = debug;
 #endif // _DEBUG_ENABLED_ > 0
 }

@@ -16,6 +16,7 @@ set(SOURCES
     src/engine/errors/debug.cpp
     
     src/engine/zapplication.cpp
+    src/engine/zwindow.cpp
 )
 
 # Inlucde directories for libraries

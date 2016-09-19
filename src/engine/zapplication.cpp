@@ -4,10 +4,12 @@
 #include <GLFW/glfw3.h>
 
 #include "engine/errors/errors.h"
+#include "engine/zwindow.h"
 
 using namespace std;
 
 zi::ZApplication::ZApplication(int argc, char *argv[])
+    : m_running(false)
 {
     int i;
     for(i = 0; i < argc; i++)
@@ -22,11 +24,47 @@ zi::ZApplication::ZApplication(int argc, char *argv[])
     glfwWindowHint(GLFW_SAMPLES, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 }
 
 zi::ZApplication::~ZApplication(void)
 {
+    int i;
+    for(i = 0; i < m_windows.size(); i++)
+        delete m_windows[i];
+    
     glfwTerminate();
+}
+
+void zi::ZApplication::addWindow(zi::ZWindow *window)
+{
+    m_windows.push_back(window);
+}
+
+void zi::ZApplication::start(void)
+{
+    m_running = true;
+    mainLoop();
+}
+
+void zi::ZApplication::mainLoop(void)
+{
+    int i;
+    
+    while(m_running)
+    {
+        for(i = 0; i < m_windows.size(); i++)
+        {
+            m_windows[i]->logic();
+            if(m_windows[i]->shouldClose())
+            {
+                delete m_windows[i];
+                m_windows.erase(m_windows.begin() + i--);
+                continue;
+            }
+                
+            m_windows[i]->render();
+        }
+        if(m_windows.empty())
+            m_running = false;
+    }
 }

@@ -5,7 +5,7 @@
  * 1 - enable debug
  * 2 - disable debug
  */
-#define _DABUG_ENABLE_ 1
+#define _DEBUG_ENABLE_ 1
 
 #include <iostream>
 
@@ -27,7 +27,7 @@ namespace zi
 #if _DEBUG_ENABLE_ > 0
                 if(s_debugEnabled)
                 {
-                    std::cout << "[Error]: " << T << std::endl;
+                    std::cout << "[Error]: " << value << std::endl;
                 }
 #endif // _DEBUG_ENABLE_
                 return *this;
@@ -42,7 +42,7 @@ namespace zi
 #if _DEBUG_ENABLE_ > 0
                 if(s_debugEnabled)
                 {
-                    std::cout << "[Warning]: " << T << std::endl;
+                    std::cout << "[Warning]: " << value << std::endl;
                 }
 #endif // _DEBUG_ENABLE_
                 return *this;
@@ -52,12 +52,12 @@ namespace zi
         struct OutDebug
         {
             template<typename T>
-            OutError &operator<<(const T &value)
+            OutDebug &operator<<(const T &value)
             {
 #if _DEBUG_ENABLE_ > 0
                 if(s_debugEnabled)
                 {
-                    std::cout << "[Error]: " << T << std::endl;
+                    std::cout << "[Debug]: " << value << std::endl;
                 }
 #endif // _DEBUG_ENABLE_
                 return *this;
@@ -68,8 +68,8 @@ namespace zi
         static OutWarning warning;
         static OutDebug debug;
         
-        private:
-            static bool s_debugEnabled;
+    private:
+        static bool s_debugEnabled;
     };
 }
 
