@@ -5,8 +5,9 @@ zi::ZException::ZException(void)
 {
 }
 
-zi::ZException::ZException(std::string what)
-    : m_what(what)
+zi::ZException::ZException(std::string what, int code)
+    : m_what(what),
+      m_code(code)
 {
 }
 
@@ -17,6 +18,11 @@ zi::ZException::~ZException(void)
 const char *zi::ZException::what(void) const throw()
 {
     return m_what.c_str();
+}
+
+int zi::ZException::code(void) const throw()
+{
+    return m_code;
 }
 
 std::ostream &zi::operator<<(std::ostream &lhs, const zi::ZException &rhs)

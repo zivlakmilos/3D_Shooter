@@ -1,8 +1,9 @@
 #include "engine/engine.h"
 
-#include "GL/gl.h"
+#include <vector>
 
 using namespace zi;
+using namespace std;
 
 class Window : public zi::ZWindow
 {
@@ -10,6 +11,12 @@ public:
     Window(void)
         : zi::ZWindow("Test", 1024, 768)
     {
+        vector<GLfloat> data = {
+            -1.0f, -1.0f, 0.0f,
+             1.0f, -1.0f, 0.0f,
+             0.0f, 1.0f, 0.0f
+        };
+        renderer.setData(data);
     }
     
     virtual ~Window(void)
@@ -24,8 +31,13 @@ public:
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
         
+        renderer.render();
+        
         zi::ZWindow::render();
     }
+    
+private:
+    Renderer renderer;
 };
 
 int main(int argc, char *argv[])

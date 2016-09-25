@@ -2,6 +2,7 @@
 #define _ENGINE_H_
 
 #include "engine/core/core.h"
+#include "engine/render/render.h"
 
 #include "engine/zapplication.h"
 #include "engine/zwindow.h"

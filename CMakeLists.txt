@@ -15,6 +15,9 @@ set(SOURCES
     src/engine/errors/zoutofrangeexception.cpp
     src/engine/errors/debug.cpp
     
+    src/engine/render/renderer.cpp
+    src/engine/render/shader.cpp
+    
     src/engine/zapplication.cpp
     src/engine/zwindow.cpp
 )
@@ -36,6 +39,7 @@ set(LIBRARIES
 # Configuration
 include_directories(${INCLUDE_DIRS})
 include_directories(include/)
+include_directories(3rdparty/)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
 

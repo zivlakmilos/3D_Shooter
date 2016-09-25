@@ -14,13 +14,15 @@ namespace zi
     {
     public:
         ZException(void);
-        ZException(std::string what);
+        ZException(std::string what, int code = 0);
         virtual ~ZException(void);
         
         virtual const char *what(void) const throw();
+        virtual int code(void) const throw();
         
     protected:
         std::string m_what;
+        int m_code;
     };
     
     /*
