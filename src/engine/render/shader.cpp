@@ -144,7 +144,7 @@ void zi::Shader::disable(void)
     glUseProgram(0);
 }
 
-GLuint zi::Shader::getUniformLocation(std::string name)
+GLuint zi::Shader::getUniformLocation(std::string name) const
 {
     GLuint result;
     result = glGetUniformLocation(m_glProgram, name.c_str());
@@ -162,7 +162,7 @@ void zi::Shader::setUniform3f(std::string name, glm::vec3 value)
     }
 }
 
-GLuint zi::Shader::getAttribLocation(std::string name)
+GLuint zi::Shader::getAttribLocation(std::string name) const
 {
     GLuint result;
     result = glGetAttribLocation(m_glProgram, name.c_str());

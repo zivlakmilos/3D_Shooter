@@ -19,8 +19,8 @@ namespace zi
         void enable(void);
         void disable(void);
         
-        GLuint getUniformLocation(std::string name);
-        GLuint getAttribLocation(std::string name);
+        GLuint getUniformLocation(std::string name) const;
+        GLuint getAttribLocation(std::string name) const;
         
         void setUniform3f(std::string name, glm::vec3 value);
         

@@ -26,7 +26,14 @@ void zi::Renderer::render(zi::VertexArray &vertexArray, zi::Shader &shader)
     glEnableVertexAttribArray(vertexPosition);
     
     glVertexAttribPointer(vertexPosition, 3, GL_FLOAT, GL_FALSE, 0, (void *)0);
-    glDrawArrays(GL_TRIANGLES, 0, 3);
+    
+    if(vertexArray.isUseVbi())
+    {
+        glDrawElements(GL_TRIANGLES, vertexArray.count(), GL_UNSIGNED_BYTE, (void *)0);
+    } else
+    {
+        glDrawArrays(GL_TRIANGLES, 0, vertexArray.count());
+    }
     
     glDisableVertexAttribArray(vertexPosition);
     

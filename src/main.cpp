@@ -9,35 +9,27 @@ class Window : public zi::ZWindow
 {
 public:
     Window(void)
-        : zi::ZWindow("Test", 1024, 768),
-          m_vertexArray({
-              -1.0f, -1.0f, 0.0f,
-               1.0f, -1.0f, 0.0f,
-               0.0f,  1.0f, 0.0f
-          }, {
-              0, 0, 0, 0, 0, 0, 0, 0, 0
-          })
+        : zi::ZWindow("Test", 1024, 768)
     {
-        vector<GLfloat> data = {
-            -1.0f, -1.0f, 0.0f,
-             1.0f, -1.0f, 0.0f,
-             0.0f, 1.0f, 0.0f
-        };
+//         m_vertexArray.setVertices({
+//             -1.0f, -1.0f, 0.0f,
+//              1.0f, -1.0f, 0.0f,
+//              0.0f,  1.0f, 0.0f
+//         });
+//         m_vertexArray.setIndices({
+//             0, 1, 2
+//         });
         
-        int i;
-        for(i = 0; i < data.size(); i++)
-            m_data[i] = data[i];
-        
-        //m_vertexArray(data, { 0, 0, 0, 0, 0, 0, 0, 0, 0 });
-        /*
-        m_vertexArray = VertexArray({
-            -1.0f, -1.0f, 0.0f,
-             1.0f, -1.0f, 0.0f,
-             0.0f,  1.0f, 0.0f
-        }, {
-            0, 0, 0, 0, 0, 0, 0, 0, 0
+        m_vertexArray.setVertices({
+            -0.5f, -0.5f, 0.0f,
+             0.5f, -0.5f, 0.0f,
+             0.5f,  0.5f, 0.0f,
+            -0.5f,  0.5f, 0.0f
         });
-        */
+        m_vertexArray.setIndices({
+            0, 1, 2,
+            0, 2, 3
+        });
         
         try {
             m_shader.loadVertexShader("shader/triangletest.vertex");
