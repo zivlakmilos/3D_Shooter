@@ -14,38 +14,32 @@ public:
         : zi::ZWindow("Test", 1024, 768)
     {
         m_vertexArray.setVertices({
-            -1.0f, -1.0f, -1.0f,    // Front
-             1.0f, -1.0f, -1.0f,
-             1.0f,  1.0f, -1.0f,
-            -1.0f,  1.0f, -1.0f,
-            -1.0f, -1.0f,  1.0f,    // Back
-             1.0f, -1.0f,  1.0f,
-             1.0f,  1.0f,  1.0f,
-            -1.0f,  1.0f,  1.0f,
-            -1.0f, -1.0f, -1.0f,    // Down
-             1.0f, -1.0f, -1.0f,
-             1.0f, -1.0f,  1.0f,
-            -1.0f, -1.0f,  1.0f,
-            -1.0f,  1.0f, -1.0f,    // Top
-             1.0f,  1.0f, -1.0f,
-             1.0f,  1.0f,  1.0f,
-            -1.0f,  1.0f,  1.0f,
-            -1.0f, -1.0f, -1.0f,    // Left
-            -1.0f,  1.0f, -1.0f,
-            -1.0f, -1.0f,  1.0f,
-            -1.0f,  1.0f,  1.0f,
-             1.0f, -1.0f, -1.0f,    // Right
-             1.0f,  1.0f, -1.0f,
-             1.0f, -1.0f,  1.0f,
-             1.0f,  1.0f,  1.0f,
+             -1.0f, -1.0f, -1.0f,
+              1.0f, -1.0f, -1.0f,
+              1.0f,  1.0f, -1.0f,
+             -1.0f,  1.0f, -1.0f,
+             -1.0f, -1.0f,  1.0f,
+              1.0f, -1.0f,  1.0f,
+              1.0f,  1.0f,  1.0f,
+             -1.0f,  1.0f,  1.0f,
+        });
+        m_vertexArray.setColors({
+            1.0f, 0.0f, 0.0f,
+            0.0f, 1.0f, 0.0f,
+            0.0f, 0.0f, 1.0f,
+            1.0f, 1.0f, 0.0f,
+            1.0f, 1.0f, 1.0f,
+            0.0f, 1.0f, 1.0f,
+            1.0f, 1.0f, 1.0f,
+            1.0f, 1.0f, 1.0f
         });
         m_vertexArray.setIndices({
-             0,  1,  2,     0,  2,  3,      // Front
-             4,  5,  6,     4,  6,  7,      // Back
-             8,  9, 10,      8, 10, 11,     // Down
-            12, 13, 14,     12, 14, 15,     // Up
-            16, 17, 18,     16, 18, 19,     // Left
-            20, 21, 22,     20, 22, 23      // Right
+            0, 1, 2,    2, 3, 0,    // Front
+            4, 5, 6,    6, 7, 4,    // Back
+            1, 5, 6,    6, 2, 1,    // Left
+            0, 3, 7,    7, 4, 0,    // Right
+            0, 1, 5,    5, 3, 0,    // Bottom
+            3, 2, 6,    6, 7, 3     // Top
         });
         
         glm::mat4 projection = glm::perspective(45.0f, 4.0f / 3.0f, 0.1f, 100.0f);
@@ -64,6 +58,9 @@ public:
         } catch(zi::ZException ex) {
             Debug::error << ex;
         }
+        
+        glEnable(GL_DEPTH_TEST);
+        glDepthFunc(GL_LESS);
     }
     
     virtual ~Window(void)
@@ -76,7 +73,7 @@ public:
             return;
         
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         
         try {
             m_renderer.render(m_vertexArray, m_shader);

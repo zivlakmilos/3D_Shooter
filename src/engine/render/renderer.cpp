@@ -19,14 +19,20 @@ zi::Renderer::~Renderer(void)
 void zi::Renderer::render(zi::VertexArray &vertexArray, zi::Shader &shader)
 {
     shader.enable();
-    vertexArray.bind();
     
     GLuint vertexPosition = shader.getAttribLocation(zi::Shader::attrVertexPosition);
+    GLuint vertexColor = shader.getAttribLocation(zi::Shader::attrVertexColor);
     shader.setUniformMat4f(zi::Shader::uniformVertexTransform, vertexArray.getTransform());
     
     glEnableVertexAttribArray(vertexPosition);
-    
+    vertexArray.bind(zi::VertexArray::BindVertices |
+                     zi::VertexArray::BindIndices);
     glVertexAttribPointer(vertexPosition, 3, GL_FLOAT, GL_FALSE, 0, (void *)0);
+    
+    glEnableVertexAttribArray(vertexColor);
+    vertexArray.bind(zi::VertexArray::BindColors |
+                     zi::VertexArray::BindIndices);
+    glVertexAttribPointer(vertexColor, 3, GL_FLOAT, GL_FALSE, 0, (void *)0);
     
     if(vertexArray.isUseVbi())
     {
@@ -36,6 +42,7 @@ void zi::Renderer::render(zi::VertexArray &vertexArray, zi::Shader &shader)
         glDrawArrays(GL_TRIANGLES, 0, vertexArray.count());
     }
     
+    glDisableVertexAttribArray(vertexColor);
     glDisableVertexAttribArray(vertexPosition);
     
     vertexArray.unbind();

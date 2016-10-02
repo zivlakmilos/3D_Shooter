@@ -16,8 +16,14 @@ namespace zi
                     std::initializer_list<GLbyte> indices = {});
         VertexArray(void);
         virtual ~VertexArray(void);
+               
+        enum Binding {
+            BindVertices    = 0x01,
+            BindIndices     = 0x02,
+            BindColors      = 0x04
+        };
         
-        void bind(void);
+        void bind(int binding = BindVertices | BindIndices);
         void unbind(void);
         
         bool inline isUseVbi(void) const { return m_useVbi; };
@@ -26,6 +32,7 @@ namespace zi
         
         void setVertices(std::initializer_list<GLfloat> vertices);
         void setIndices(std::initializer_list<GLbyte> indices);
+        void setColors(std::initializer_list<GLfloat> colors);
         void inline setUseVbi(bool useVbi) { m_useVbi = useVbi; };
         void inline setTransform(glm::mat4 transform) { m_transform = transform; };
         
@@ -34,8 +41,9 @@ namespace zi
         bool m_useVbi;
         glm::mat4 m_transform;
         
-        GLuint m_vbo;
-        GLuint m_vbi;
+        GLuint m_vbo;   // Vertex buffer object
+        GLuint m_vbi;   // Vertex buffer index
+        GLuint m_vbc;   // Vertex buffer color
     };
 }
 

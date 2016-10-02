@@ -10,5 +10,7 @@ uniform mat4 vertexTransform;
 void main()
 {
     gl_Position = vertexTransform * vec4(vertexPosition, 1.0);
+    
+    fragmentColor = vertexColor;
 }
 

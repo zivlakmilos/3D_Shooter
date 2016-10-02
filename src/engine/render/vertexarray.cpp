@@ -37,6 +37,7 @@ zi::VertexArray::VertexArray(void)
 {
     glGenBuffers(1, &m_vbo);
     glGenBuffers(1, &m_vbi);
+    glGenBuffers(1, &m_vbc);
 }
 
 zi::VertexArray::~VertexArray(void)
@@ -45,13 +46,18 @@ zi::VertexArray::~VertexArray(void)
         glDeleteBuffers(1, &m_vbo);
     if(m_vbi)
         glDeleteBuffers(1, &m_vbi);
+    if(m_vbc)
+        glDeleteBuffers(1, &m_vbc);
 }
 
-void zi::VertexArray::bind(void)
+void zi::VertexArray::bind(int binding)
 {
-    glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
-    if(m_useVbi)
+    if(binding & zi::VertexArray::BindVertices)
+        glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
+    if(m_useVbi && binding & zi::VertexArray::BindIndices)
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_vbi);
+    if(binding & zi::VertexArray::BindColors)
+        glBindBuffer(GL_ARRAY_BUFFER, m_vbc);
 }
 
 void zi::VertexArray::unbind(void)
@@ -71,7 +77,7 @@ void zi::VertexArray::setVertices(std::initializer_list<GLfloat> vertices)
     for(i = 0; i < count; i++)
         arrVertices[i] = *(vertices.begin() + i);
     
-    bind();
+    bind(zi::VertexArray::BindVertices);
     glBufferData(GL_ARRAY_BUFFER, sizeof(arrVertices), arrVertices, GL_STATIC_DRAW);
     unbind();
 }
@@ -86,7 +92,20 @@ void zi::VertexArray::setIndices(std::initializer_list<GLbyte> indices)
     for(i = 0; i < m_count; i++)
         arrIndices[i] = *(indices.begin() + i);
     
-    bind();
+    bind(zi::VertexArray::BindIndices);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(arrIndices), arrIndices, GL_STATIC_DRAW);
+    unbind();
+}
+
+void zi::VertexArray::setColors(std::initializer_list<GLfloat> colors)
+{
+    GLfloat arrColors[colors.size()];
+    
+    int i;
+    for(i = 0; i < colors.size(); i++)
+        arrColors[i] = *(colors.begin() + i);
+    
+    bind(zi::VertexArray::BindColors);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(arrColors), arrColors, GL_STATIC_DRAW);
     unbind();
 }

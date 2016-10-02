@@ -7,6 +7,7 @@
 #include <engine/errors/errors.h>
 
 const std::string zi::Shader::attrVertexPosition = "vertexPosition";
+const std::string zi::Shader::attrVertexColor = "vertexColor";
 const std::string zi::Shader::uniformVertexTransform = "vertexTransform";
 
 zi::Shader::Shader(void)

@@ -26,6 +26,7 @@ namespace zi
         void setUniformMat4f(std::string name, glm::mat4 value);
         
         static const std::string attrVertexPosition;
+        static const std::string attrVertexColor;
         static const std::string uniformVertexTransform;
         
     private:
