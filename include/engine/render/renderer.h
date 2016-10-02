@@ -4,6 +4,9 @@
 #include <GL/glew.h>
 #include <vector>
 
+#include "engine/render/shader.h"
+#include "engine/render/vertexarray.h"
+
 namespace zi
 {
     class Renderer
@@ -12,12 +15,9 @@ namespace zi
         Renderer(void);
         virtual ~Renderer(void);
         
-        void setData(std::vector<GLfloat> vectices);
-        void render(void);
+        void render(zi::VertexArray &vertexArray, zi::Shader &shader);
         
     private:
-        GLuint m_glProgram;
-        GLuint m_vbo;
     };
 }
 

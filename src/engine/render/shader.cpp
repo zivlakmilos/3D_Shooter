@@ -6,12 +6,17 @@
 
 #include <engine/errors/errors.h>
 
+const std::string zi::Shader::attrVertexPosition = "vertexPosition";
+
 zi::Shader::Shader(void)
 {
+    m_glProgram = glCreateProgram();
 }
 
 zi::Shader::~Shader(void)
 {
+    if(m_glProgram)
+        glDeleteProgram(m_glProgram);
 }
 
 void zi::Shader::loadVertexShader(std::string vertexFileName)
@@ -32,7 +37,7 @@ void zi::Shader::loadFragmentShader(std::string fragmentFileName)
     }
 }
 
-GLuint zi::Shader::build(void)
+void zi::Shader::build(void)
 {
     GLuint vertexShader;
     GLuint fragmentShader;
@@ -51,36 +56,33 @@ GLuint zi::Shader::build(void)
     /*
      * Linking program
      */
-    GLuint program = glCreateProgram();
     
-    glAttachShader(program, vertexShader);
-    glAttachShader(program, fragmentShader);
-    glLinkProgram(program);
+    glAttachShader(m_glProgram, vertexShader);
+    glAttachShader(m_glProgram, fragmentShader);
+    glLinkProgram(m_glProgram);
     
-    glDetachShader(program, vertexShader);
-    glDetachShader(program, fragmentShader);
+    glDetachShader(m_glProgram, vertexShader);
+    glDetachShader(m_glProgram, fragmentShader);
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
     
     GLint ok = GL_FALSE;
-    glGetProgramiv(program, GL_LINK_STATUS, &ok);
+    glGetProgramiv(m_glProgram, GL_LINK_STATUS, &ok);
     if(ok == GL_FALSE)
     {
-        glDeleteProgram(program);
+        glDeleteProgram(m_glProgram);
         int logSize;
-        glGetProgramiv(program, GL_INFO_LOG_LENGTH, &logSize);
+        glGetProgramiv(m_glProgram, GL_INFO_LOG_LENGTH, &logSize);
         if(logSize > 0)
         {
             char log[logSize + 1];
-            glGetProgramInfoLog(program, logSize, 0, log);
+            glGetProgramInfoLog(m_glProgram, logSize, 0, log);
             std::string msg = "Shader linking error: ";
             msg += log;
-            throw zi::ZException(log);
+            throw zi::ZException(msg);
         } else
             throw zi::ZException("Shader linking error: Unknown");
     }
-    
-    return program;
 }
 
 void zi::Shader::loadShader(std::string shaderFileName, std::string &shaderCode)
@@ -100,7 +102,7 @@ void zi::Shader::loadShader(std::string shaderFileName, std::string &shaderCode)
     shaderStream.close();
 }
 
-GLuint zi::Shader::compileShader(GLenum shaderType, std::string shaderCode)
+GLuint zi::Shader::compileShader(GLenum shaderType, std::string &shaderCode)
 {
     if(shaderCode.empty())
         throw zi::ZException("Shader code not loaded", zi::Shader::ExceptionShaderNotLoaded);
@@ -129,5 +131,42 @@ GLuint zi::Shader::compileShader(GLenum shaderType, std::string shaderCode)
             throw zi::ZException("Shader compiling error: Unknown", zi::Shader::ExceptionShaderUnknown);
     }
     
+    return result;
+}
+
+void zi::Shader::enable(void)
+{
+    glUseProgram(m_glProgram);
+}
+
+void zi::Shader::disable(void)
+{
+    glUseProgram(0);
+}
+
+GLuint zi::Shader::getUniformLocation(std::string name)
+{
+    GLuint result;
+    result = glGetUniformLocation(m_glProgram, name.c_str());
+    if(result < 0)
+        throw zi::ZException("Uniform with name \"" + name + "\" don't exists in shader");
+    return result;
+}
+
+void zi::Shader::setUniform3f(std::string name, glm::vec3 value)
+{
+    try {
+        glUniform3f(getUniformLocation(name), value.x, value.y, value.z);
+    } catch(zi::ZException ex) {
+        throw ex;
+    }
+}
+
+GLuint zi::Shader::getAttribLocation(std::string name)
+{
+    GLuint result;
+    result = glGetAttribLocation(m_glProgram, name.c_str());
+    if(result < 0)
+        throw zi::ZException("Attribute with name \"" + name + "\" don't exists in shader");
     return result;
 }

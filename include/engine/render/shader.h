@@ -3,6 +3,7 @@
 
 #include <string>
 #include <GL/glew.h>
+#include <glm/glm.hpp>
 
 namespace zi
 {
@@ -14,14 +15,24 @@ namespace zi
         
         void loadVertexShader(std::string vertexFileName);
         void loadFragmentShader(std::string fragmentFileName);
-        GLuint build(void);
+        void build(void);
+        void enable(void);
+        void disable(void);
+        
+        GLuint getUniformLocation(std::string name);
+        GLuint getAttribLocation(std::string name);
+        
+        void setUniform3f(std::string name, glm::vec3 value);
+        
+        static const std::string attrVertexPosition;
         
     private:
         void loadShader(std::string shaderFileName, std::string &shaderCode);
-        GLuint compileShader(GLenum shaderType, std::string shaderCode);
+        GLuint compileShader(GLenum shaderType, std::string &shaderCode);
         
         std::string m_vertexShaderCode;
         std::string m_fragmentShaderCode;
+        GLuint m_glProgram;
         
         enum ExceptionCodes {
             ExceptionShaderNotLoaded = 1,

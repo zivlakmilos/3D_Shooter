@@ -17,6 +17,7 @@ set(SOURCES
     
     src/engine/render/renderer.cpp
     src/engine/render/shader.cpp
+    src/engine/render/vertexarray.cpp
     
     src/engine/zapplication.cpp
     src/engine/zwindow.cpp

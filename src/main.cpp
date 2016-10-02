@@ -9,14 +9,43 @@ class Window : public zi::ZWindow
 {
 public:
     Window(void)
-        : zi::ZWindow("Test", 1024, 768)
+        : zi::ZWindow("Test", 1024, 768),
+          m_vertexArray({
+              -1.0f, -1.0f, 0.0f,
+               1.0f, -1.0f, 0.0f,
+               0.0f,  1.0f, 0.0f
+          }, {
+              0, 0, 0, 0, 0, 0, 0, 0, 0
+          })
     {
         vector<GLfloat> data = {
             -1.0f, -1.0f, 0.0f,
              1.0f, -1.0f, 0.0f,
              0.0f, 1.0f, 0.0f
         };
-        renderer.setData(data);
+        
+        int i;
+        for(i = 0; i < data.size(); i++)
+            m_data[i] = data[i];
+        
+        //m_vertexArray(data, { 0, 0, 0, 0, 0, 0, 0, 0, 0 });
+        /*
+        m_vertexArray = VertexArray({
+            -1.0f, -1.0f, 0.0f,
+             1.0f, -1.0f, 0.0f,
+             0.0f,  1.0f, 0.0f
+        }, {
+            0, 0, 0, 0, 0, 0, 0, 0, 0
+        });
+        */
+        
+        try {
+            m_shader.loadVertexShader("shader/triangletest.vertex");
+            m_shader.loadFragmentShader("shader/triangletest.fragment");
+            m_shader.build();
+        } catch(zi::ZException ex) {
+            Debug::error << ex;
+        }
     }
     
     virtual ~Window(void)
@@ -31,13 +60,20 @@ public:
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
         
-        renderer.render();
+        try {
+            m_renderer.render(m_vertexArray, m_shader);
+        } catch(zi::ZException ex) {
+            Debug::error << ex;
+        }
         
         zi::ZWindow::render();
     }
     
 private:
-    Renderer renderer;
+    VertexArray m_vertexArray;
+    Shader m_shader;
+    GLfloat m_data[9];
+    Renderer m_renderer;
 };
 
 int main(int argc, char *argv[])
