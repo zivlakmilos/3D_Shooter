@@ -23,8 +23,10 @@ namespace zi
         GLuint getAttribLocation(std::string name) const;
         
         void setUniform3f(std::string name, glm::vec3 value);
+        void setUniformMat4f(std::string name, glm::mat4 value);
         
         static const std::string attrVertexPosition;
+        static const std::string uniformVertexTransform;
         
     private:
         void loadShader(std::string shaderFileName, std::string &shaderCode);

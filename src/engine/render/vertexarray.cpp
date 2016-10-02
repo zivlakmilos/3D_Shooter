@@ -32,10 +32,11 @@ zi::VertexArray::VertexArray(std::initializer_list<GLfloat> vertices,
 }
 
 zi::VertexArray::VertexArray(void)
+    : m_useVbi(false),
+      m_transform(1.0f)
 {
     glGenBuffers(1, &m_vbo);
     glGenBuffers(1, &m_vbi);
-    m_useVbi = false;
 }
 
 zi::VertexArray::~VertexArray(void)

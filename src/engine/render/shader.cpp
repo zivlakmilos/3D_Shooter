@@ -7,6 +7,7 @@
 #include <engine/errors/errors.h>
 
 const std::string zi::Shader::attrVertexPosition = "vertexPosition";
+const std::string zi::Shader::uniformVertexTransform = "vertexTransform";
 
 zi::Shader::Shader(void)
 {
@@ -169,4 +170,12 @@ GLuint zi::Shader::getAttribLocation(std::string name) const
     if(result < 0)
         throw zi::ZException("Attribute with name \"" + name + "\" don't exists in shader");
     return result;
+}
+
+void zi::Shader::setUniformMat4f(std::string name, glm::mat4 value)
+{
+    try {
+        glUniformMatrix4fv(getUniformLocation(name), 1, GL_FALSE, &value[0][0]);
+    } catch(zi::ZException ex) {
+    }
 }

@@ -22,6 +22,7 @@ void zi::Renderer::render(zi::VertexArray &vertexArray, zi::Shader &shader)
     vertexArray.bind();
     
     GLuint vertexPosition = shader.getAttribLocation(zi::Shader::attrVertexPosition);
+    shader.setUniformMat4f(zi::Shader::uniformVertexTransform, vertexArray.getTransform());
     
     glEnableVertexAttribArray(vertexPosition);
     
