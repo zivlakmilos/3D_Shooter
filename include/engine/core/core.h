@@ -7,4 +7,6 @@
 #include "engine/core/vect4.h"
 #include "engine/core/matrix.h"
 
+#include "engine/core/memory/memory.h"
+
 #endif // _ENGINE_CORE_H_
