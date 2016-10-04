@@ -1,9 +1,9 @@
 #version 120
 
 attribute vec3 vertexPosition;
-attribute vec3 vertexColor;
+attribute vec2 vertexUV;
 
-varying vec3 fragmentColor;
+varying vec2 UV;
 
 uniform mat4 vertexTransform;
 
@@ -11,6 +11,5 @@ void main()
 {
     gl_Position = vertexTransform * vec4(vertexPosition, 1.0);
     
-    fragmentColor = vertexColor;
+    UV = vertexUV;
 }
-

@@ -16,23 +16,46 @@ zi::Renderer::~Renderer(void)
 {
 }
 
-void zi::Renderer::render(zi::VertexArray &vertexArray, zi::Shader &shader)
+void zi::Renderer::render(zi::VertexArray &vertexArray, zi::Shader &shader, zi::Texture *texture)
 {
     shader.enable();
     
-    GLuint vertexPosition = shader.getAttribLocation(zi::Shader::attrVertexPosition);
-    GLuint vertexColor = shader.getAttribLocation(zi::Shader::attrVertexColor);
-    shader.setUniformMat4f(zi::Shader::uniformVertexTransform, vertexArray.getTransform());
+    GLuint vertexPosition, vertexColor, vertexUV;
+    
+    try {
+        vertexPosition = shader.getAttribLocation(zi::Shader::attrVertexPosition);
+        if(texture)
+        {
+            vertexUV = shader.getAttribLocation(zi::Shader::attrVertexUV);
+            shader.setUniform1f(zi::Shader::uniformFragmentTextureSampler, 0);
+            texture->bind();
+        } else
+        {
+            vertexColor = shader.getAttribLocation(zi::Shader::attrVertexColor);
+        }
+        shader.setUniformMat4f(zi::Shader::uniformVertexTransform, vertexArray.getTransform());
+    } catch(zi::ZException ex) {
+        shader.disable();
+        throw ex;
+    }
     
     glEnableVertexAttribArray(vertexPosition);
     vertexArray.bind(zi::VertexArray::BindVertices |
                      zi::VertexArray::BindIndices);
     glVertexAttribPointer(vertexPosition, 3, GL_FLOAT, GL_FALSE, 0, (void *)0);
     
-    glEnableVertexAttribArray(vertexColor);
-    vertexArray.bind(zi::VertexArray::BindColors |
-                     zi::VertexArray::BindIndices);
-    glVertexAttribPointer(vertexColor, 3, GL_FLOAT, GL_FALSE, 0, (void *)0);
+    if(texture)
+    {
+        glEnableVertexAttribArray(vertexUV);
+        vertexArray.bind(zi::VertexArray::BindTextureCoords);
+        glVertexAttribPointer(vertexUV, 2, GL_FLOAT, GL_FALSE, 0, (void *)0);
+    } else
+    {
+        glEnableVertexAttribArray(vertexColor);
+        vertexArray.bind(zi::VertexArray::BindColors |
+                         zi::VertexArray::BindIndices);
+        glVertexAttribPointer(vertexColor, 3, GL_FLOAT, GL_FALSE, 0, (void *)0);
+    }
     
     if(vertexArray.isUseVbi())
     {
@@ -42,9 +65,12 @@ void zi::Renderer::render(zi::VertexArray &vertexArray, zi::Shader &shader)
         glDrawArrays(GL_TRIANGLES, 0, vertexArray.count());
     }
     
+    glDisableVertexAttribArray(vertexUV);
     glDisableVertexAttribArray(vertexColor);
     glDisableVertexAttribArray(vertexPosition);
     
+    if(texture)
+        texture->unbind();
     vertexArray.unbind();
     shader.disable();
 }

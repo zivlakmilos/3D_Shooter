@@ -5,6 +5,7 @@ cmake_minimum_required(VERSION 2.8)
 # Find packages
 find_package(OpenGL REQUIRED)
 find_package(GLEW REQUIRED)
+find_package(PNG REQUIRED)
 
 find_package(PkgConfig REQUIRED)
 pkg_search_module(GLFW REQUIRED glfw3)
@@ -18,6 +19,7 @@ set(SOURCES
     src/engine/render/renderer.cpp
     src/engine/render/shader.cpp
     src/engine/render/vertexarray.cpp
+    src/engine/render/texture.cpp
     
     src/engine/zapplication.cpp
     src/engine/zwindow.cpp
@@ -28,6 +30,7 @@ set(INCLUDE_DIRS
     ${OPENGL_INCLUDE_DIRS}
     ${GLEW_INCLUDE_DIRS}
     ${GLFW_INCLUDE_DIRS}
+    ${PNG_INCLUDE_DIRS}
 )
 
 # Libraries for linking
@@ -35,6 +38,7 @@ set(LIBRARIES
     ${OPENGL_LIBRARIES}
     ${GLEW_LIBRARIES}
     ${GLFW_LIBRARIES}
+    ${PNG_LIBRARIES}
 )
 
 # Configuration

@@ -19,15 +19,18 @@ namespace zi
         void enable(void);
         void disable(void);
         
-        GLuint getUniformLocation(std::string name) const;
-        GLuint getAttribLocation(std::string name) const;
+        GLint getUniformLocation(std::string name) const;
+        GLint getAttribLocation(std::string name) const;
         
         void setUniform3f(std::string name, glm::vec3 value);
         void setUniformMat4f(std::string name, glm::mat4 value);
+        void setUniform1f(std::string name, GLfloat value);
         
         static const std::string attrVertexPosition;
         static const std::string attrVertexColor;
+        static const std::string attrVertexUV;
         static const std::string uniformVertexTransform;
+        static const std::string uniformFragmentTextureSampler;
         
     private:
         void loadShader(std::string shaderFileName, std::string &shaderCode);
@@ -36,12 +39,7 @@ namespace zi
         std::string m_vertexShaderCode;
         std::string m_fragmentShaderCode;
         GLuint m_glProgram;
-        
-        enum ExceptionCodes {
-            ExceptionShaderNotLoaded = 1,
-            ExceptionShaderUnknown
-        };
     };
-};
+}
 
 #endif // _ENGINE_RENDER_SHADER_

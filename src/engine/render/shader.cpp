@@ -8,7 +8,9 @@
 
 const std::string zi::Shader::attrVertexPosition = "vertexPosition";
 const std::string zi::Shader::attrVertexColor = "vertexColor";
+const std::string zi::Shader::attrVertexUV = "vertexUV";
 const std::string zi::Shader::uniformVertexTransform = "vertexTransform";
+const std::string zi::Shader::uniformFragmentTextureSampler = "fragmentTextureSampler";
 
 zi::Shader::Shader(void)
 {
@@ -107,7 +109,7 @@ void zi::Shader::loadShader(std::string shaderFileName, std::string &shaderCode)
 GLuint zi::Shader::compileShader(GLenum shaderType, std::string &shaderCode)
 {
     if(shaderCode.empty())
-        throw zi::ZException("Shader code not loaded", zi::Shader::ExceptionShaderNotLoaded);
+        throw zi::ZException("Shader code not loaded");
     
     GLuint result = glCreateShader(shaderType);
     
@@ -130,7 +132,7 @@ GLuint zi::Shader::compileShader(GLenum shaderType, std::string &shaderCode)
             msg += log;
             throw zi::ZException(msg);
         } else
-            throw zi::ZException("Shader compiling error: Unknown", zi::Shader::ExceptionShaderUnknown);
+            throw zi::ZException("Shader compiling error: Unknown");
     }
     
     return result;
@@ -146,9 +148,9 @@ void zi::Shader::disable(void)
     glUseProgram(0);
 }
 
-GLuint zi::Shader::getUniformLocation(std::string name) const
+GLint zi::Shader::getUniformLocation(std::string name) const
 {
-    GLuint result;
+    GLint result;
     result = glGetUniformLocation(m_glProgram, name.c_str());
     if(result < 0)
         throw zi::ZException("Uniform with name \"" + name + "\" don't exists in shader");
@@ -164,9 +166,9 @@ void zi::Shader::setUniform3f(std::string name, glm::vec3 value)
     }
 }
 
-GLuint zi::Shader::getAttribLocation(std::string name) const
+GLint zi::Shader::getAttribLocation(std::string name) const
 {
-    GLuint result;
+    GLint result;
     result = glGetAttribLocation(m_glProgram, name.c_str());
     if(result < 0)
         throw zi::ZException("Attribute with name \"" + name + "\" don't exists in shader");
@@ -178,5 +180,15 @@ void zi::Shader::setUniformMat4f(std::string name, glm::mat4 value)
     try {
         glUniformMatrix4fv(getUniformLocation(name), 1, GL_FALSE, &value[0][0]);
     } catch(zi::ZException ex) {
+        throw ex;
+    }
+}
+
+void zi::Shader::setUniform1f(std::string name, GLfloat value)
+{
+    try {
+        glUniform1f(getUniformLocation(name), value);
+    } catch(zi::ZException ex) {
+        throw ex;
     }
 }

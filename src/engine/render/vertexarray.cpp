@@ -38,6 +38,7 @@ zi::VertexArray::VertexArray(void)
     glGenBuffers(1, &m_vbo);
     glGenBuffers(1, &m_vbi);
     glGenBuffers(1, &m_vbc);
+    glGenBuffers(1, &m_vbt);
 }
 
 zi::VertexArray::~VertexArray(void)
@@ -48,6 +49,8 @@ zi::VertexArray::~VertexArray(void)
         glDeleteBuffers(1, &m_vbi);
     if(m_vbc)
         glDeleteBuffers(1, &m_vbc);
+    if(m_vbt)
+        glDeleteBuffers(1, &m_vbt);
 }
 
 void zi::VertexArray::bind(int binding)
@@ -58,6 +61,8 @@ void zi::VertexArray::bind(int binding)
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_vbi);
     if(binding & zi::VertexArray::BindColors)
         glBindBuffer(GL_ARRAY_BUFFER, m_vbc);
+    if(binding & zi::VertexArray::BindTextureCoords)
+        glBindBuffer(GL_ARRAY_BUFFER, m_vbt);
 }
 
 void zi::VertexArray::unbind(void)
@@ -107,5 +112,17 @@ void zi::VertexArray::setColors(std::initializer_list<GLfloat> colors)
     
     bind(zi::VertexArray::BindColors);
     glBufferData(GL_ARRAY_BUFFER, sizeof(arrColors), arrColors, GL_STATIC_DRAW);
+    unbind();
+}
+
+void zi::VertexArray::setTextureCoords(std::initializer_list< GLfloat > textureCoords)
+{
+    GLfloat arrTextureCoords[textureCoords.size()];
+    
+    for(int i = 0; i < textureCoords.size(); i++)
+        arrTextureCoords[i] = *(textureCoords.begin() + i);
+    
+    bind(zi::VertexArray::BindTextureCoords);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(arrTextureCoords), arrTextureCoords, GL_STATIC_DRAW);
     unbind();
 }

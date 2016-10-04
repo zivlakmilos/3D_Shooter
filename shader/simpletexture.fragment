@@ -1,0 +1,10 @@
+#version 120
+
+uniform sampler2D fragmentTextureSampler;
+
+varying vec2 UV;
+
+void main()
+{
+    gl_FragColor = texture2D(fragmentTextureSampler, UV);
+}

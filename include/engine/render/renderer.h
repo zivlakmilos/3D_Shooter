@@ -6,6 +6,7 @@
 
 #include "engine/render/shader.h"
 #include "engine/render/vertexarray.h"
+#include "engine/render/texture.h"
 
 namespace zi
 {
@@ -15,7 +16,9 @@ namespace zi
         Renderer(void);
         virtual ~Renderer(void);
         
-        void render(zi::VertexArray &vertexArray, zi::Shader &shader);
+        void render(zi::VertexArray &vertexArray,
+                    zi::Shader &shader,
+                    zi::Texture *texture = nullptr);
         
     private:
     };
