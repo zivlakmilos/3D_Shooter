@@ -1,7 +1,7 @@
 #ifndef _ENGINE_CORE_MEMORY_ARRAY_HANDLER_H_
 #define _ENGINE_CORE_MEMORY_ARRAY_HANDLER_H_
 
-#include "baseresourcehandler.h"
+#include "engine/core/memory/baseresourcehandler.h"
 
 namespace zi
 {
@@ -9,8 +9,8 @@ namespace zi
     class ArrayHandler : public BaseResourceHandler<T>
     {
     public:
-        ArrayHandler(T *pResource) : BaseResourceHandler(pResource) {};
-        virtual ~ArrayHandler(void) { delete[] m_pResource; };
+        ArrayHandler(T *pResource) : BaseResourceHandler<T>(pResource) {};
+        virtual ~ArrayHandler(void) { delete[] this->m_pResource; };
     };
 }
 
