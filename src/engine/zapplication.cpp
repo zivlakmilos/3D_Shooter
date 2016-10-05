@@ -62,6 +62,9 @@ void zi::ZApplication::mainLoop(void)
         
         for(i = 0; i < m_windows.size(); i++)
         {
+            if(!m_windows[i]->isShowing())
+                continue;
+            
             m_windows[i]->updateTime(deltaTime);
             m_windows[i]->logic();
             if(m_windows[i]->shouldClose())

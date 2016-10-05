@@ -29,9 +29,6 @@ zi::ZWindow::~ZWindow(void)
 
 void zi::ZWindow::render(void)
 {
-    if(!m_show)
-        return;
-    
     glfwMakeContextCurrent(m_glfwWindow);
     glfwSwapBuffers(m_glfwWindow);
     glfwPollEvents();
@@ -39,9 +36,6 @@ void zi::ZWindow::render(void)
 
 void zi::ZWindow::logic(void)
 {
-    if(!m_show)
-        return;
-    
     glfwMakeContextCurrent(m_glfwWindow);
     if(glfwWindowShouldClose(m_glfwWindow) ||
        glfwGetKey(m_glfwWindow, GLFW_KEY_ESCAPE) == GLFW_PRESS)

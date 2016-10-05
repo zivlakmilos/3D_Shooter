@@ -21,6 +21,8 @@ namespace zi
         
         virtual inline void updateTime(double deltaTime) { m_deltaTime = deltaTime; };
         
+        virtual inline bool isShowing(void) { return m_show; };
+        
     protected:
         virtual inline double getDeltaTime(void) { return m_deltaTime; };
         
