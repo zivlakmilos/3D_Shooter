@@ -51,3 +51,11 @@ void zi::ZWindow::show(bool show)
     else
         glfwHideWindow(m_glfwWindow);
 }
+
+void zi::ZWindow::showCursos(bool show)
+{
+    if(!show)
+        glfwSetInputMode(m_glfwWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    else
+        glfwSetInputMode(m_glfwWindow, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+}

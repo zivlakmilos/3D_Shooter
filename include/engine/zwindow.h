@@ -17,6 +17,7 @@ namespace zi
         virtual void render(void);
         
         virtual void show(bool show = true);
+        virtual void showCursos(bool show = true);
         virtual inline bool shouldClose(void) const { return !m_alive; };
         
         virtual inline void updateTime(double deltaTime) { m_deltaTime = deltaTime; };
