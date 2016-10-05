@@ -24,6 +24,7 @@ namespace zi
         std::vector<std::string> m_args;
         std::vector<ZWindow *> m_windows;
         bool m_running;
+        double m_lastTime;
     };
 }
 

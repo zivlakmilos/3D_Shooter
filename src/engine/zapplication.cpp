@@ -43,6 +43,7 @@ void zi::ZApplication::addWindow(zi::ZWindow *window)
 void zi::ZApplication::start(void)
 {
     m_running = true;
+    m_lastTime = glfwGetTime();
     mainLoop();
 }
 
@@ -52,8 +53,16 @@ void zi::ZApplication::mainLoop(void)
     
     while(m_running)
     {
+        /*
+         * Calculating delta time
+         */
+        double currentTime = glfwGetTime();
+        double deltaTime = m_lastTime - currentTime;
+        m_lastTime = currentTime;
+        
         for(i = 0; i < m_windows.size(); i++)
         {
+            m_windows[i]->updateTime(deltaTime);
             m_windows[i]->logic();
             if(m_windows[i]->shouldClose())
             {

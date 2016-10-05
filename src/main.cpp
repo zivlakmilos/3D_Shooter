@@ -3,6 +3,8 @@
 #include <vector>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/quaternion.hpp>
+#include <glm/gtx/quaternion.hpp>
 
 using namespace zi;
 using namespace std;
@@ -186,6 +188,21 @@ public:
     
     virtual ~Window(void)
     {
+    }
+    
+    virtual void logic(void)
+    {
+        if(!m_show)
+            return;
+        
+        glm::mat4 rotation = glm::rotate(glm::mat4(),
+                                         3.0f * (float)getDeltaTime(),
+                                         glm::vec3(0.0f, 1.0f, 0.0f));
+        m_vertexArray.setTransform(m_vertexArray.getTransform() * rotation);
+        
+        zi::ZWindow::logic();
+        
+        Debug::debug << 1 / getDeltaTime();
     }
     
     virtual void render(void)

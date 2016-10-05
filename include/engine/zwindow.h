@@ -17,15 +17,22 @@ namespace zi
         virtual void render(void);
         
         virtual void show(bool show = true);
-        virtual bool shouldClose(void) const { return !m_alive; };
+        virtual inline bool shouldClose(void) const { return !m_alive; };
+        
+        virtual inline void updateTime(double deltaTime) { m_deltaTime = deltaTime; };
         
     protected:
+        virtual inline double getDeltaTime(void) { return m_deltaTime; };
+        
         std::string m_caption;
         int m_width;
         int m_height;
         GLFWwindow *m_glfwWindow;
         bool m_show;
         bool m_alive;
+        
+    private:
+        double m_deltaTime;
     };
 }
 
