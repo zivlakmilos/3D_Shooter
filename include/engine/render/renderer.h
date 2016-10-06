@@ -7,6 +7,7 @@
 #include "engine/render/shader.h"
 #include "engine/render/vertexarray.h"
 #include "engine/render/texture.h"
+#include "engine/render/camera.h"
 
 namespace zi
 {
@@ -19,8 +20,16 @@ namespace zi
         void render(zi::VertexArray &vertexArray,
                     zi::Shader &shader,
                     zi::Texture *texture = nullptr);
+        void render(zi::Camera &camera,
+                    zi::VertexArray &vertexArray,
+                    zi::Shader &shader,
+                    zi::Texture *texture = nullptr);
         
     private:
+        void render(zi::VertexArray &vertexArray,
+                    zi::Shader &shader,
+                    zi::Texture *texture = nullptr,
+                    glm::mat4 *transform = nullptr);    // Override vertexArray transform (use ony for camera!)
     };
 }
 

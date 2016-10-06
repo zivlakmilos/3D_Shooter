@@ -13,6 +13,15 @@ namespace zi
         AxisZ
     };
     
+    enum Direction {
+        DirectionForward = 0x01,
+        DirectionBack = 0x02,
+        DirectionUp = 0x04,
+        DirectionDown = 0x08,
+        DirectionLeft = 0x10,
+        DirectionRight = 0x20
+    };
+    
     const glm::vec3 right(1.0f, 0.0f, 0.0f);
     const glm::vec3 left(-1.0f, 0.0f, 0.0f);
     const glm::vec3 up(0.0f, 1.0f, 0.0f);

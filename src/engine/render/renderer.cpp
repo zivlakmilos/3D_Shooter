@@ -16,7 +16,7 @@ zi::Renderer::~Renderer(void)
 {
 }
 
-void zi::Renderer::render(zi::VertexArray &vertexArray, zi::Shader &shader, zi::Texture *texture)
+void zi::Renderer::render(zi::VertexArray &vertexArray, zi::Shader &shader, zi::Texture *texture, glm::mat4 *transform)
 {
     shader.enable();
     
@@ -33,7 +33,10 @@ void zi::Renderer::render(zi::VertexArray &vertexArray, zi::Shader &shader, zi::
         {
             vertexColor = shader.getAttribLocation(zi::Shader::attrVertexColor);
         }
-        shader.setUniformMat4f(zi::Shader::uniformVertexTransform, vertexArray.getTransform());
+        if(transform)
+            shader.setUniformMat4f(zi::Shader::uniformVertexTransform, *transform);
+        else
+            shader.setUniformMat4f(zi::Shader::uniformVertexTransform, vertexArray.getTransform());
     } catch(zi::ZException ex) {
         shader.disable();
         throw ex;
@@ -73,4 +76,17 @@ void zi::Renderer::render(zi::VertexArray &vertexArray, zi::Shader &shader, zi::
         texture->unbind();
     vertexArray.unbind();
     shader.disable();
+}
+
+void zi::Renderer::render(zi::Camera &camera, zi::VertexArray &vertexArray,
+                          zi::Shader &shader, zi::Texture *texture)
+{
+    glm::mat4 transform = camera.getTransform() * vertexArray.getTransform();
+    
+    render(vertexArray, shader, texture, &transform);
+}
+
+void zi::Renderer::render(zi::VertexArray &vertexArray, zi::Shader &shader, zi::Texture *texture)
+{
+    render(vertexArray, shader, texture, nullptr);
 }

@@ -13,7 +13,8 @@ class Window : public zi::ZWindow
 {
 public:
     Window(void)
-        : zi::ZWindow("Test", 1024, 768)
+        : zi::ZWindow("Test", 1024, 768),
+          m_camera(glm::vec3(0.0f, 0.0f, 5.0f), glm::vec3(0.0f, 0.0f, -1.0f))
     {
 //         m_vertexArray.setVertices({
 //              -1.0f, -1.0f, -1.0f,
@@ -165,15 +166,6 @@ public:
         m_texture.setParameteri(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         m_texture.setParameteri(GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         
-        glm::mat4 projection = glm::perspective(45.0f, 4.0f / 3.0f, 0.1f, 100.0f);
-        glm::mat4 view = glm::lookAt(glm::vec3(4, 3, -3),
-                                     glm::vec3(0, 0, 0),
-                                     glm::vec3(0, 1, 0));
-        glm::mat4 model = glm::mat4(1.0f);
-        glm::mat4 transform = projection * view * model;
-        
-        m_vertexArray.setTransform(transform);
-        
         try {
             m_shader.loadVertexShader("shader/simpletexture.vertex");
             m_shader.loadFragmentShader("shader/simpletexture.fragment");
@@ -182,8 +174,13 @@ public:
             Debug::error << ex;
         }
         
+        showCursos(false);
+        glfwSetCursorPos(m_glfwWindow, 0.0f, 0.0f);
+        
         glEnable(GL_DEPTH_TEST);
         glDepthFunc(GL_LESS);
+        
+        //glEnable(GL_CULL_FACE);
     }
     
     virtual ~Window(void)
@@ -192,10 +189,28 @@ public:
     
     virtual void logic(void)
     {
-        glm::mat4 rotation = glm::rotate(glm::mat4(),
-                                         3.0f * (float)getDeltaTime(),
-                                         glm::vec3(0.0f, 1.0f, 0.0f));
-        m_vertexArray.setTransform(m_vertexArray.getTransform() * rotation);
+//         glm::mat4 rotation = glm::rotate(glm::mat4(),
+//                                          3.0f * (float)getDeltaTime(),
+//                                          glm::vec3(0.0f, 1.0f, 0.0f));
+//         m_vertexArray.setTransform(m_vertexArray.getTransform() * rotation);
+        
+        double cursorX, cursorY;
+        glfwGetCursorPos(m_glfwWindow, &cursorX, &cursorY);
+        glfwSetCursorPos(m_glfwWindow, 0, 0);
+        
+        glm::vec3 up = zi::up;
+        glm::vec3 right = zi::right;
+        m_camera.rotate(cursorX * 0.3f * getDeltaTime(), up);
+        m_camera.rotate(cursorY * 0.3f * getDeltaTime(), right);
+        
+        if(glfwGetKey(m_glfwWindow, GLFW_KEY_UP) == GLFW_PRESS)
+            m_camera.move(zi::DirectionForward, (float)getDeltaTime() * 3.0f);
+        if(glfwGetKey(m_glfwWindow, GLFW_KEY_DOWN) == GLFW_PRESS)
+            m_camera.move(zi::DirectionBack, (float)getDeltaTime() * 3.0f);
+        if(glfwGetKey(m_glfwWindow, GLFW_KEY_RIGHT) == GLFW_PRESS)
+            m_camera.move(zi::DirectionRight, (float)getDeltaTime() * 3.0f);
+        if(glfwGetKey(m_glfwWindow, GLFW_KEY_LEFT) == GLFW_PRESS)
+            m_camera.move(zi::DirectionLeft, (float)getDeltaTime() * 3.0f);
         
         zi::ZWindow::logic();
     }
@@ -206,7 +221,8 @@ public:
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         
         try {
-            m_renderer.render(m_vertexArray, m_shader, &m_texture);
+            //m_renderer.render(m_vertexArray, m_shader, &m_texture);
+            m_renderer.render(m_camera, m_vertexArray, m_shader, &m_texture);
         } catch(zi::ZException ex) {
             Debug::error << ex;
         }
@@ -219,6 +235,7 @@ private:
     Shader m_shader;
     Renderer m_renderer;
     Texture m_texture;
+    Camera m_camera;
 };
 
 int main(int argc, char *argv[])

@@ -20,6 +20,7 @@ set(SOURCES
     src/engine/render/shader.cpp
     src/engine/render/vertexarray.cpp
     src/engine/render/texture.cpp
+    src/engine/render/camera.cpp
     
     src/engine/zapplication.cpp
     src/engine/zwindow.cpp
