@@ -1,7 +1,7 @@
 #ifndef _ENGINE_CORE_VECT3_H_
 #define _ENGINE_CORE_VECT3_H_
 
-#include "engine/core/vect2.h"
+#include "engine/core/math/vect2.h"
 
 #include <ostream>
 

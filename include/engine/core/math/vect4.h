@@ -1,7 +1,7 @@
 #ifndef _ENGINE_CORE_VECT4_H_
 #define _ENGINE_CORE_VECT4_H_
 
-#include "engine/core/vect3.h"
+#include "engine/core/math/vect3.h"
 
 namespace zi
 {

@@ -5,7 +5,7 @@
 #include <ostream>
 #include <cmath>
 
-#include "engine/core/vect4.h"
+#include "engine/core/math/vect4.h"
 #include "engine/errors/errors.h"
 
 namespace zi
