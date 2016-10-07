@@ -199,7 +199,7 @@ public:
         glfwSetCursorPos(m_glfwWindow, 0, 0);
         
         glm::vec3 up = zi::up;
-        glm::vec3 right = zi::right;
+        glm::vec3 right = glm::cross(m_camera.getDirection(), up);
         m_camera.rotate(cursorX * 0.3f * getDeltaTime(), up);
         m_camera.rotate(cursorY * 0.3f * getDeltaTime(), right);
         

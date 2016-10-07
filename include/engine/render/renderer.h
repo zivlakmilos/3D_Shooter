@@ -28,8 +28,8 @@ namespace zi
     private:
         void render(zi::VertexArray &vertexArray,
                     zi::Shader &shader,
-                    zi::Texture *texture = nullptr,
-                    glm::mat4 *transform = nullptr);    // Override vertexArray transform (use ony for camera!)
+                    zi::Texture *texture,
+                    glm::mat4 *transform);          // Override vertexArray transform (use ony for camera!)
     };
 }
 
