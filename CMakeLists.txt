@@ -12,6 +12,8 @@ pkg_search_module(GLFW REQUIRED glfw3)
 
 # Project source code
 set(SOURCES
+    src/engine/core/pngimage.cpp
+    
     src/engine/errors/zexception.cpp
     src/engine/errors/zoutofrangeexception.cpp
     src/engine/errors/debug.cpp
