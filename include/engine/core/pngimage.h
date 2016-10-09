@@ -12,17 +12,20 @@ namespace zi
     public:
         PngImage(void);
         PngImage(std::string filePath);
+        PngImage(std::vector<png_byte> imageData, int width, int height);
         virtual ~PngImage(void);
         
         void load(std::string filePath);
         void crop(int x, int y, int width, int height);
-        std::vector<png_byte> cropCopy(int x, int y, int width, int height);
+        PngImage cropCopy(int x, int y, int width, int height);
         
         std::vector<png_byte> inline getData(void) { return m_imageData; };
         int inline getWidth(void) { return m_width; };
         int inline getHeight(void) { return m_height; };
         
     private:
+        std::vector<png_byte> cropData(int x, int y, int width, int height);
+        
         std::vector<png_byte> m_imageData;
         int m_width;
         int m_height;

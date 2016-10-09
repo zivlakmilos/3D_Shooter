@@ -45,6 +45,13 @@ zi::PngImage::PngImage(std::string filePath)
     }
 }
 
+zi::PngImage::PngImage(std::vector<png_byte> imageData, int width, int height)
+{
+    m_imageData = imageData;
+    m_width = width;
+    m_height = height;
+}
+
 zi::PngImage::~PngImage(void)
 {
 }
@@ -110,7 +117,7 @@ void zi::PngImage::load(std::string filePath)
 void zi::PngImage::crop(int x, int y, int width, int height)
 {
     try {
-        m_imageData = cropCopy(x, y, width, height);
+        m_imageData = cropData(x, y, width, height);
         m_width = width;
         m_height = height;
     } catch(zi::ZException ex) {
@@ -118,7 +125,20 @@ void zi::PngImage::crop(int x, int y, int width, int height)
     }
 }
 
-std::vector<png_byte> zi::PngImage::cropCopy(int x, int y, int width, int height)
+zi::PngImage zi::PngImage::cropCopy(int x, int y, int width, int height)
+{
+    std::vector<png_byte> dstData;
+    
+    try {
+        dstData = cropData(x, y, width, height);
+    } catch(zi::ZException ex) {
+        throw ex;
+    }
+    
+    return zi::PngImage(dstData, width, height);
+}
+
+std::vector<png_byte> zi::PngImage::cropData(int x, int y, int width, int height)
 {
     if(x + width > m_width ||
        y + height > m_height ||
