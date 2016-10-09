@@ -16,6 +16,7 @@ namespace zi
         
         void load(std::string filePath);
         void crop(int x, int y, int width, int height);
+        std::vector<png_byte> cropCopy(int x, int y, int width, int height);
         
         std::vector<png_byte> inline getData(void) { return m_imageData; };
         int inline getWidth(void) { return m_width; };
@@ -23,7 +24,6 @@ namespace zi
         
     private:
         std::vector<png_byte> m_imageData;
-        std::vector<png_bytep> m_rowPointers;
         int m_width;
         int m_height;
     };

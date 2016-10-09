@@ -98,16 +98,27 @@ void zi::PngImage::load(std::string filePath)
     
     m_imageData.resize(rowBytes * height);
     
-    m_rowPointers.resize(m_height);
+    std::vector<png_bytep> rowPointers(m_height);
     
     int i;
     for(i = 0; i < height; i++)
-        m_rowPointers[height - 1 - i] = &m_imageData[0] + i * rowBytes;
+        rowPointers[height - 1 - i] = &m_imageData[0] + i * rowBytes;
     
-    png_read_image(pPng, &m_rowPointers[0]);
+    png_read_image(pPng, &rowPointers[0]);
 }
 
 void zi::PngImage::crop(int x, int y, int width, int height)
+{
+    try {
+        m_imageData = cropCopy(x, y, width, height);
+        m_width = width;
+        m_height = height;
+    } catch(zi::ZException ex) {
+        throw ex;
+    }
+}
+
+std::vector<png_byte> zi::PngImage::cropCopy(int x, int y, int width, int height)
 {
     if(x + width > m_width ||
        y + height > m_height ||
@@ -129,8 +140,5 @@ void zi::PngImage::crop(int x, int y, int width, int height)
         }
     }
     
-    m_width = width;
-    m_height = height;
-    
-    m_imageData = dstData;
+    return dstData;
 }
