@@ -32,11 +32,11 @@ private:
     png_infopp m_pInfo2;
 };
 
-PngImage::PngImage(void)
+zi::PngImage::PngImage(void)
 {
 }
 
-PngImage::PngImage(std::string filePath)
+zi::PngImage::PngImage(std::string filePath)
 {
     try {
         load(filePath);
@@ -45,11 +45,11 @@ PngImage::PngImage(std::string filePath)
     }
 }
 
-PngImage::~PngImage(void)
+zi::PngImage::~PngImage(void)
 {
 }
 
-void PngImage::load(std::string filePath)
+void zi::PngImage::load(std::string filePath)
 {
     char header[8];
     PngStructHandler pngHandler;
@@ -107,7 +107,7 @@ void PngImage::load(std::string filePath)
     png_read_image(pPng, &m_rowPointers[0]);
 }
 
-void PngImage::crop(int x, int y, int width, int height)
+void zi::PngImage::crop(int x, int y, int width, int height)
 {
     if(x + width > m_width ||
        y + height > m_height ||
