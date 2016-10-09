@@ -4,15 +4,19 @@
 #include <string>
 #include <GL/glew.h>
 
+#include "engine/core/pngimage.h"
+
 namespace zi
 {
     class Texture
     {
     public:
+        Texture(zi::PngImage &pngImage);
         Texture(std::string filePath);
         Texture(void);
         virtual ~Texture(void);
         
+        void load(zi::PngImage &pngImage);
         void load(std::string filePath);
         void bind(void);
         void unbind(void);

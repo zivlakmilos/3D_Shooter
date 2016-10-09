@@ -11,6 +11,16 @@
 #include "engine/core/memory/memory.h"
 #include "engine/core/pngimage.h"
 
+zi::Texture::Texture(zi::PngImage &pngImage)
+    : Texture()
+{
+    try {
+        load(pngImage);
+    } catch(zi::ZException ex) {
+        throw ex;
+    }
+}
+
 zi::Texture::Texture(std::string filePath)
     : Texture()
 {
@@ -32,28 +42,11 @@ zi::Texture::~Texture(void)
         glDeleteTextures(1, &m_texture);
 }
 
-/*
- * TODO:
- *  Make new class for holding data image, and then just use it from here
- *  (for threading)
- */
-void zi::Texture::load(std::string filePath)
+void zi::Texture::load(zi::PngImage &pngImage)
 {
-    PngImage texImage;
-    
-    try {
-        texImage.load(filePath);
-    } catch(zi::ZException ex) {
-        throw ex;
-    }
-    
-    /*
-     * Now generateing texture for OpenGL
-     */
-    
-    std::vector<png_byte> imageData = texImage.getData();
+    std::vector<png_byte> imageData = pngImage.getData();
     bind();
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texImage.getWidth(), texImage.getHeight(), 0,
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, pngImage.getWidth(), pngImage.getHeight(), 0,
                  GL_RGBA, GL_UNSIGNED_BYTE, (GLvoid *)&imageData[0]);
     setParameterf(GL_TEXTURE_WRAP_S, GL_REPEAT);
     setParameterf(GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -61,6 +54,18 @@ void zi::Texture::load(std::string filePath)
     setParameteri(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glGenerateMipmap(GL_TEXTURE_2D);
     unbind();
+}
+
+void zi::Texture::load(std::string filePath)
+{
+    PngImage texImage;
+    
+    try {
+        texImage.load(filePath);
+        load(texImage);
+    } catch(zi::ZException ex) {
+        throw ex;
+    }
 }
 
 void zi::Texture::bind(void)
