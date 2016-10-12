@@ -148,11 +148,11 @@ std::vector<png_byte> zi::PngImage::cropData(int x, int y, int width, int height
     
     std::vector<png_byte> dstData;
     
-    for(int i = y * 4; i < y + height * 4; i += 4)
+    for(int i = y; i < y + height; i++)
     {
-        for(int j = x * 4; j < x + width * 4; j += 4)
+        for(int j = x; j < x + width; j++)
         {
-            int pos = i * m_width + j;
+            int pos = 4 * (i * m_width + j);
             for(int k = 0; k < 4; k++)
                 dstData.push_back(m_imageData[pos + k]);
         }
