@@ -43,16 +43,16 @@ void zi::Camera::translate(glm::vec3 &direction)
 void zi::Camera::move(zi::Direction direction, float distance)
 {
     if(direction & zi::DirectionForward)
-        m_position -= m_direction * distance;
-    if(direction & zi::DirectionBack)
         m_position += m_direction * distance;
+    if(direction & zi::DirectionBack)
+        m_position -= m_direction * distance;
     if(direction & zi::DirectionUp)
         m_position += m_up * distance;
     if(direction & zi::DirectionDown)
         m_position -= m_up * distance;
     if(direction & (zi::DirectionRight | zi::DirectionLeft))
     {
-        glm::vec3 vecDirection = glm::cross(m_up, m_direction);
+        glm::vec3 vecDirection = glm::normalize(glm::cross(m_direction, m_up));
         if(direction & zi::DirectionRight)
             m_position += vecDirection * distance;
         if(direction & zi::DirectionLeft)

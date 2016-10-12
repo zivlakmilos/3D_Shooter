@@ -200,8 +200,8 @@ public:
         
         glm::vec3 up = zi::up;
         glm::vec3 right = glm::cross(m_camera.getDirection(), up);
-        m_camera.rotate(cursorX * 0.3f * getDeltaTime(), up);
-        m_camera.rotate(cursorY * 0.3f * getDeltaTime(), right);
+        m_camera.rotate(-cursorX * 0.3f * getDeltaTime(), up);
+        m_camera.rotate(-cursorY * 0.3f * getDeltaTime(), right);
         
         if(glfwGetKey(m_glfwWindow, GLFW_KEY_UP) == GLFW_PRESS)
             m_camera.move(zi::DirectionForward, (float)getDeltaTime() * 3.0f);

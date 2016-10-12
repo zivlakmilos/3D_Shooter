@@ -57,7 +57,7 @@ void zi::ZApplication::mainLoop(void)
          * Calculating delta time
          */
         double currentTime = glfwGetTime();
-        double deltaTime = m_lastTime - currentTime;
+        double deltaTime = currentTime - m_lastTime;
         m_lastTime = currentTime;
         
         for(i = 0; i < m_windows.size(); i++)
