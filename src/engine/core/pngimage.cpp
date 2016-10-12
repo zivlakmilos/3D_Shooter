@@ -160,3 +160,33 @@ std::vector<png_byte> zi::PngImage::cropData(int x, int y, int width, int height
     
     return dstData;
 }
+
+void zi::PngImage::flip(int flip)
+{
+    m_imageData = flipData(flip);
+}
+
+zi::PngImage zi::PngImage::flipCopy(int flip)
+{
+    return zi::PngImage(flipData(flip), m_width, m_height);
+}
+
+std::vector<png_byte> zi::PngImage::flipData(int flip)
+{
+    std::vector<png_byte> dstData(m_imageData.size());
+    
+    for(int i = 0; i < m_height; i++)
+    {
+        for(int j = 0; j < m_width; j++)
+        {
+            int srcJ = flip & FlipVertical ? m_width - j - 1 : j;
+            int srcI = flip & FlipHorizontal ? m_height - i - 1 : i;
+            int pos = 4 * (i * m_width + j);
+            int srcPos = 4 * (srcI * m_width + srcJ);
+            for(int k = 0; k < 4; k++)
+                dstData[pos + k] = m_imageData[srcPos + k];
+        }
+    }
+    
+    return dstData;
+}
